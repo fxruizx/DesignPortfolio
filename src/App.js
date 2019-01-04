@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ArtPiece  from './ArtPiece';
 import logo from './logo.svg';
 import './App.css';
 
@@ -13,7 +14,6 @@ class App extends Component {
     //CONVERT XML TO JSON
     const convert = require('xml-js');
     
-    
     try{
       //PROXY IS TO GET AROUND CORS AND CORBS DURING RSS FETCH
       let proxy = "https://cors-anywhere.herokuapp.com/";
@@ -24,39 +24,28 @@ class App extends Component {
       this.setState({
         portfolio: artwork.rss.channel.item
       })
-      //console.log(artworkJSON);
     } catch(e){
       console.log(e);
     }
   }
   
-  
-  
-  
   render() {
-    console.log("obJECT " +  this.state.portfolio );
+    console.log( this.state.portfolio );
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          FXR
         </header>
         <section>
-          { this.state.portfolio.map((item) => {
-            return(
-              <div key={ item.guid._text }>{ item.title._text }</div>
-            )
-          }) }
+          { this.state.portfolio == '' &&
+            <p>loading...</p>
+          }
+          
+          { this.state.portfolio.map((item) => (
+            <ArtPiece key={ item.guid._text } title={ item.title._text }/>
+            ) 
+          )}
+          
         </section>
       </div>
     );
