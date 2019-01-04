@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ArtPiece  from './ArtPiece';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
@@ -37,7 +36,7 @@ class App extends Component {
           FXR
         </header>
         <section>
-          { this.state.portfolio == '' &&
+          { this.state.portfolio.length < 1 &&
             <p>loading...</p>
           }
           
