@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 
 export default class ArtPiece extends Component {
     render(){
-        const { title } = this.props;
-        console.log('ArtPiece component');
+        const { title, image } = this.props;
+        console.log('ArtPiece component' + { image });
         
         return(
-            <h1>{ title }</h1>
+            <div>
+                <h1>{ title }</h1>
+                <img src={`${ image }?w=150`} alt={ title } title={ title } />
+            </div>
         );
     }
 }

@@ -41,7 +41,7 @@ class App extends Component {
           }
           
           { this.state.portfolio.map((item) => (
-            <ArtPiece key={ item.guid._text } title={ item.title._text }/>
+            <ArtPiece key={ item.guid._text } title={ item.title._text } image={ item["media:content"][1]._attributes.url }/>
             ) 
           )}
           
