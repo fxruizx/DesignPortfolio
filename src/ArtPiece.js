@@ -1,15 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class ArtPiece extends Component {
-    render(){
-        const { title, image } = this.props;
-        console.log('ArtPiece component' + { image });
-        
-        return(
-            <div>
-                <h1>{ title }</h1>
-                <img src={`${ image }?w=150`} alt={ title } title={ title } />
-            </div>
-        );
-    }
-}
+//FUNCTIONAL STATELESS COMPONENT
+// title and image are the props from App.js
+const ArtPiece = ({ title, image }) => (
+    <img src={`${ image }?w=150`} alt={ title } title={ title } />
+);
+
+export default ArtPiece;
