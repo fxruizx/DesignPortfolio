@@ -36,7 +36,7 @@ export default class ArtGrig extends Component {
           }
           
           { this.state.portfolio.map((item) => (
-            <ArtPiece key={ item.guid._text } title={ item.title._text } image={ item["media:content"][1]._attributes.url }/>
+            <ArtPiece key={ item.guid._text } title={ item.title._text } image={ item["media:content"][1]._attributes.url } imagesize={ 150 } />
             ) 
           )}
         </ArtGrid>
