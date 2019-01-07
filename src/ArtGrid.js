@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import styled-components from 'styled-components'
+import styled from 'styled-components';
 import ArtPiece  from './ArtPiece';
 
-export class ArtGrig extends Component {
+export default class ArtGrig extends Component {
   
   state = {
     portfolio: []
@@ -35,15 +35,21 @@ export class ArtGrig extends Component {
             <p>loading...</p>
           }
           
-          
-          
+          { this.state.portfolio.map((item) => (
+            <ArtPiece key={ item.guid._text } title={ item.title._text } image={ item["media:content"][1]._attributes.url }/>
+            ) 
+          )}
         </ArtGrid>
     );
   }
-  
-  const ArtGrid = styled.div`
-    border: 3px dotted red;
-  `
-  
-  
-};
+}
+
+const ArtGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-row-gap: 1rem;
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 2rem 0;
+  width: 100%;
+`;
