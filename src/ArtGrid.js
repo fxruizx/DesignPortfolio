@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import styled-components from 'styled-components'
 import ArtPiece  from './ArtPiece';
-import './App.css';
 
-class App extends Component {
+export class ArtGrig extends Component {
   
   state = {
     portfolio: []
@@ -29,23 +29,21 @@ class App extends Component {
   }
   
   render() {
-    console.log( this.state.portfolio );
     return (
-      <div className="App">
-        <header className="App-header">
-          FXR
-        </header>
-        <section>
+        <ArtGrid>
           { this.state.portfolio.length < 1 &&
             <p>loading...</p>
           }
           
           
           
-        </section>
-      </div>
+        </ArtGrid>
     );
   }
-}
-
-export default App;
+  
+  const ArtGrid = styled.div`
+    border: 3px dotted red;
+  `
+  
+  
+};
