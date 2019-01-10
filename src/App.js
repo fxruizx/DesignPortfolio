@@ -7,6 +7,7 @@ import{
 } from 'react-router-dom';
 
 import ArtGrid  from './ArtGrid';
+import ArtDetail from './ArtDetail';
 
 import './App.css';
 
@@ -22,6 +23,7 @@ class App extends Component {
           </header>
           <Switch>
             <Route exact path="/" component={ ArtGrid } />
+            <Route path="/:title" component={ ArtDetail } />
           </Switch>
         </div>
       </Router>

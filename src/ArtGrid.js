@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ArtPiece  from './ArtPiece';
 
-export default class ArtGrig extends Component {
+export default class ArtGrid extends Component {
   
   state = {
     portfolio: []
@@ -19,10 +20,10 @@ export default class ArtGrig extends Component {
       const result = await fetch(proxy+'https://franciscoxruiz.wordpress.com/feed/?format=xml');
       const artworkTxt = await result.text();
       const artworkJSON = await convert.xml2json(artworkTxt, {compact: true, spaces: 2});
-      const artwork = JSON.parse(artworkJSON)
+      const artwork = JSON.parse(artworkJSON);
       this.setState({
         portfolio: artwork.rss.channel.item
-      })
+      });
     } catch(e){
       console.log(e);
     }
@@ -30,26 +31,36 @@ export default class ArtGrig extends Component {
   
   render() {
     return (
-        <ArtGrid>
+        <ArtGridStyled>
           { this.state.portfolio.length < 1 &&
             <p>loading...</p>
           }
           
           { this.state.portfolio.map((item) => (
-            <ArtPiece key={ item.guid._text } title={ item.title._text } image={ item["media:content"][1]._attributes.url } imagesize={ 150 } />
+            <Link key={ item.guid._text } to={ 
+              {
+                pathname: item.title._text.replace(/ /g, '-'),
+                state: {
+                  title: item.title._text,
+                  imgsrc: item["media:content"][1]._attributes.url
+                }
+              }
+            }><ArtPiece title={ item.title._text } image={ item["media:content"][1]._attributes.url } imagesize={ 150 } /></Link>
             ) 
           )}
-        </ArtGrid>
+        </ArtGridStyled>
     );
   }
 }
 
-const ArtGrid = styled.div`
+
+
+const ArtGridStyled = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-auto-flow: dense;
   grid-row-gap: 1rem;
   margin: 0 auto;
-  max-width: 1200px;
   padding: 2rem 0;
-  width: 100%;
 `;
+
