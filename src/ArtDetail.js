@@ -21,7 +21,7 @@ export default class ArtDetail extends Component {
     const { title, imgsrc } = this.state;
     return (
       <ArtDetailStyled>
-        <ArtPiece key={ title } title={ title } image={ imgsrc } />
+        <ArtPiece title={ title } image={ imgsrc } />
         <ArtTitleStyled>{ title }</ArtTitleStyled>
       </ArtDetailStyled>
     );
@@ -41,11 +41,18 @@ const ArtDetailStyled = styled.div`
     height: auto;
     grid-column: 1 / 10;
     grid-row: 1 / span 10;
+    transform: translateX(-100px);
+    animation: .5s forwards imgAppear;
     
     @media screen and (max-width: 640px){
       grid-column: 1 / span 10;
       grid-row: 1 / 2;
     }
+  }
+  
+  @keyframes imgAppear{
+    from{ transform: translateX(-100px); opacity: 0; }
+    to{ transform: translateX( 0px); opacity: 1; }
   }
 `;
 
@@ -55,6 +62,8 @@ const ArtTitleStyled = styled.div`
   background-color: rgba(255,255,255,.75);
   padding: .5em;
   text-align: left;
+  transform: translateX(100px);
+  animation: .5s forwards titleAppear;
   
   @media screen and (max-width: 640px){
     grid-column: 1 / span 10;
@@ -62,4 +71,8 @@ const ArtTitleStyled = styled.div`
     text-align: center;
   }
   
+  @keyframes titleAppear{
+    from{ transform: translateX(100px); opacity: 0; }
+    to{ transform: translateX( 0px); opacity: 1; }
+  }
 `;
