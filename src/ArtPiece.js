@@ -11,4 +11,5 @@ export default ArtPiece;
 
 const ArtPieceStyled = styled.img`
     margin: 0 auto;
+    box-shadow: 1px 2px 2px rgba(0,0,0,.2);
 `;

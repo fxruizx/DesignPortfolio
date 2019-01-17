@@ -58,7 +58,7 @@ const ArtDetailStyled = styled.div`
 
 const ArtTitleStyled = styled.div`
   grid-column: 9 / 11;
-  grid-row: 9 / 10;
+  grid-row: 2 / 3;
   background-color: rgba(255,255,255,.75);
   padding: .5em;
   text-align: left;
