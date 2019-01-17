@@ -42,10 +42,11 @@ export default class ArtGrid extends Component {
                 pathname: item.title._text.replace(/ /g, '-'),
                 state: {
                   title: item.title._text,
-                  imgsrc: item["media:content"][1]._attributes.url
+                  imgsrc: item["media:content"][1]._attributes.url,
+                  arttag: `${ item.category.map((props) => ( props._cdata ))}`
                 }
               }
-            }><ArtPiece title={ item.title._text } image={ item["media:content"][1]._attributes.url } imagesize={ 150 } /></Link>
+            }><ArtPiece arttag={`${ item.category.map((props) => ( props._cdata ))}`} title={ item.title._text } image={ item["media:content"][1]._attributes.url } imagesize={ 150 } /></Link>
             ) 
           )}
         </ArtGridStyled>

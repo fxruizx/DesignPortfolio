@@ -19,7 +19,7 @@ class App extends Component {
       <Router>
         <div className="App">
           <header className="App-header">
-            <Link to="/">FXR</Link>
+            <Link className="App-link" to="/">FXR Design</Link>
           </header>
           <Switch>
             <Route exact path="/" component={ ArtGrid } />

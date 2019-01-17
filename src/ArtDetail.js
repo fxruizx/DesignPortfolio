@@ -6,22 +6,26 @@ export default class ArtDetail extends Component {
   
   state = {
     title: '',
-    imgsrc: ''
+    imgsrc: '',
+    arttag: ''
   }
   
   componentDidMount(){
     this.setState({
       title: this.props.location.state.title,
-      imgsrc: this.props.location.state.imgsrc
+      imgsrc: this.props.location.state.imgsrc,
+      arttag: this.props.location.state.arttag
     });
+    
   }
   
   render() {
     //const { title, imgsrc } = this.state;
-    const { title, imgsrc } = this.state;
+    const { title, imgsrc, arttag } = this.state;
+    console.log("arttags: "+ arttag);
     return (
       <ArtDetailStyled>
-        <ArtPiece title={ title } image={ imgsrc } />
+        <ArtPiece arttag={ arttag } title={ title } image={ imgsrc } />
         <ArtTitleStyled>{ title }</ArtTitleStyled>
       </ArtDetailStyled>
     );
