@@ -60,8 +60,10 @@ const ArtGridStyled = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   grid-auto-flow: dense;
+  grid-column-gap: 1rem;
   grid-row-gap: 1rem;
   margin: 0 auto;
   padding: 2rem 0;
+  width: 80%;
 `;
 

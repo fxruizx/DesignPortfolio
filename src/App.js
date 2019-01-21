@@ -5,7 +5,7 @@ import{
   Switch,
   Link
 } from 'react-router-dom';
-
+import AboutPage from './AboutPage';
 import ArtGrid  from './ArtGrid';
 import ArtDetail from './ArtDetail';
 
@@ -23,6 +23,7 @@ class App extends Component {
           </header>
           <Switch>
             <Route exact path="/" component={ ArtGrid } />
+            <Route path="/about" component={ AboutPage } />
             <Route path="/:title" component={ ArtDetail } />
           </Switch>
         </div>
