@@ -64,6 +64,7 @@ const ArtTitleStyled = styled.div`
   grid-column: 9 / 11;
   grid-row: 2 / 3;
   background-color: rgba(255,255,255,.75);
+  box-shadow: 1px 2px 2px rgba(0,0,0,.2);
   padding: .5em;
   text-align: left;
   transform: translateX(100px);

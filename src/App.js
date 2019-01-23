@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import{
   BrowserRouter as Router,
   Route,
-  Switch,
-  Link
+  Switch
 } from 'react-router-dom';
+import Navigation from './Navigation';
 import AboutPage from './AboutPage';
 import ArtGrid  from './ArtGrid';
 import ArtDetail from './ArtDetail';
@@ -19,7 +19,7 @@ class App extends Component {
       <Router>
         <div className="App">
           <header className="App-header">
-            <Link className="App-link" to="/">FXR Design</Link>
+            <Navigation></Navigation>
           </header>
           <Switch>
             <Route exact path="/" component={ ArtGrid } />
