@@ -42,11 +42,12 @@ export default class ArtGrid extends Component {
                 pathname: item.title._text.replace(/ /g, '-'),
                 state: {
                   title: item.title._text,
+                  desc: item["description"]._cdata,
                   imgsrc: item["media:content"][1]._attributes.url,
                   arttag: `${ item.category.map((props) => ( props._cdata ))}`
                 }
               }
-            }><ArtPiece arttag={`${ item.category.map((props) => ( props._cdata ))}`} title={ item.title._text } image={ item["media:content"][1]._attributes.url } imagesize={ 150 } /></Link>
+            }><ArtPiece arttag={`${ item.category.map((props) => ( props._cdata ))}`} title={ item.title._text } image={ item["media:content"][1]._attributes.url } imagesize={ 360 } /></Link>
             ) 
           )}
         </ArtGridStyled>
@@ -58,7 +59,7 @@ export default class ArtGrid extends Component {
 
 const ArtGridStyled = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
   grid-auto-flow: dense;
   grid-column-gap: 1rem;
   grid-row-gap: 1rem;

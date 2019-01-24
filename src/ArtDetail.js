@@ -6,6 +6,7 @@ export default class ArtDetail extends Component {
   
   state = {
     title: '',
+    desc: '',
     imgsrc: '',
     arttag: ''
   }
@@ -13,6 +14,7 @@ export default class ArtDetail extends Component {
   componentDidMount(){
     this.setState({
       title: this.props.location.state.title,
+      desc: this.props.location.state.desc,
       imgsrc: this.props.location.state.imgsrc,
       arttag: this.props.location.state.arttag
     });
@@ -21,12 +23,15 @@ export default class ArtDetail extends Component {
   
   render() {
     //const { title, imgsrc } = this.state;
-    const { title, imgsrc, arttag } = this.state;
+    const { title, desc, imgsrc, arttag } = this.state;
     console.log("arttags: "+ arttag);
     return (
       <ArtDetailStyled>
         <ArtPiece arttag={ arttag } title={ title } image={ imgsrc } />
-        <ArtTitleStyled>{ title }</ArtTitleStyled>
+        <ArtTitleStyled>
+          <h4>{ title }</h4>
+          <p>{ desc }</p>
+        </ArtTitleStyled>
       </ArtDetailStyled>
     );
   }
@@ -35,6 +40,7 @@ export default class ArtDetail extends Component {
 const ArtDetailStyled = styled.div`
   display: grid;
   grid-template-columns: repeat(10, 1fr);
+  grid-column-gap: 1em;
   margin: 0 auto;
   max-width: 800px;
   padding: 2em 0;
@@ -43,8 +49,8 @@ const ArtDetailStyled = styled.div`
   img{
     max-width: 100%;
     height: auto;
-    grid-column: 1 / 10;
-    grid-row: 1 / span 10;
+    grid-column: 1 / 9;
+    grid-row: 1 / span 7;
     transform: translateX(-100px);
     animation: .5s forwards imgAppear;
     
@@ -62,7 +68,7 @@ const ArtDetailStyled = styled.div`
 
 const ArtTitleStyled = styled.div`
   grid-column: 9 / 11;
-  grid-row: 2 / 3;
+  grid-row: 5 / 8;
   background-color: rgba(255,255,255,.75);
   box-shadow: 1px 2px 2px rgba(0,0,0,.2);
   padding: .5em;
