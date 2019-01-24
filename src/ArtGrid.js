@@ -47,7 +47,7 @@ export default class ArtGrid extends Component {
                   arttag: `${ item.category.map((props) => ( props._cdata ))}`
                 }
               }
-            }><ArtPiece arttag={`${ item.category.map((props) => ( props._cdata ))}`} title={ item.title._text } image={ item["media:content"][1]._attributes.url } imagesize={ 360 } /></Link>
+            }><ArtPiece arttag={`${ item.category.map((props) => ( props._cdata ))}`} title={ item.title._text } image={ item["media:content"][1]._attributes.url } imagesize={`${ window.innerWidth > 400 ? 360 : 300 }`} /></Link>
             ) 
           )}
         </ArtGridStyled>
@@ -66,5 +66,16 @@ const ArtGridStyled = styled.div`
   margin: 0 auto;
   padding: 2rem 0;
   width: 80%;
+  
+  @media screen and (max-width: 400px){
+    grid-template-columns: repeat(auto-fit, minmax(80%, 1fr));
+  }
+  
+  /* Center Images in Grid cells */
+  a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
