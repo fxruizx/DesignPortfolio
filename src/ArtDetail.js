@@ -30,7 +30,8 @@ export default class ArtDetail extends Component {
         <ArtPiece arttag={ arttag } title={ title } image={ imgsrc } />
         <ArtTitleStyled>
           <h4>{ title }</h4>
-          <p>{ desc }</p>
+          {/* dangerouslySetInnerHTML used to allow for apostrophe's and other html/numeric entities in the description to be rendered correctly */}
+          <p dangerouslySetInnerHTML={{__html: desc}}></p>
         </ArtTitleStyled>
       </ArtDetailStyled>
     );
