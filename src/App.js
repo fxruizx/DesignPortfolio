@@ -5,8 +5,9 @@ import{
   Switch
 } from 'react-router-dom';
 import Navigation from './Navigation';
+import GridRouter from './GridRouter';
 import AboutPage from './AboutPage';
-import ArtGrid  from './ArtGrid';
+//import ArtGrid  from './ArtGrid';
 import ArtDetail from './ArtDetail';
 
 import './App.css';
@@ -22,8 +23,10 @@ class App extends Component {
             <Navigation></Navigation>
           </header>
           <Switch>
-            <Route exact path="/" component={ ArtGrid } />
+            <Route exact path="/" component={ GridRouter } />
             <Route path="/about" component={ AboutPage } />
+            {/*<Route path="/filter/:title" render={(props) => <ArtGrid {...props} filter="pixelart"/>} />*/}
+            <Route path="/filter/:tag" component={ GridRouter }/>
             <Route path="/:title" component={ ArtDetail } />
           </Switch>
         </div>
