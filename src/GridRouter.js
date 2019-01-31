@@ -1,3 +1,6 @@
+//!!GRID ROUTER IS NO LONGER NEEDED!!
+//-----------------------------------
+
 // GRID ROUTER COMPONENT USED BECAUSE GOING DIRECTLY FROM APP TO ARTGRID
 // DOES NOT CAUSE RERENDER SO CAN'T GO BETWEEN DIFFERENT FILTERED GRIDS
 import React, { Component } from 'react';
@@ -24,11 +27,12 @@ export default class GridRouter extends Component {
                 <Route exact path="/" component={ ArtGrid } />
                 {/*<Route path="/filter/:title" render={(props) => <ArtGrid {...props} filter="pixelart"/>} />*/}
                 {/*<Route key=":tag" path="/filter/:tag" render={ ArtGrid }/>*/}
-                <Route 
+                {/*<Route 
                     exact
                     path="/filter/:tag"
                     render={props => <ArtGrid key={props.match.params.type || 'empty'}/>} 
-                /> 
+                /> */}
+                <Route exact path="/filter/:tag" render={(props) => <ArtGrid {...props} />}/>
             </Switch>
             </div>
         );
