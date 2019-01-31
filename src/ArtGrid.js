@@ -35,26 +35,29 @@ export default class ArtGrid extends Component {
   
   render() {
     return (
-      <ArtGridStyled>
-        { this.state.portfolio.length < 1 &&
-          <p>loading...</p>
-        }
+      <div>
         
-        { this.state.portfolio.map((item) => (
-          <Link key={ item.guid._text } to={ 
-            {
-              pathname: item.title._text.replace(/ /g, '-'),
-              state: {
-                title: item.title._text,
-                desc: item["description"]._cdata,
-                imgsrc: item["media:content"][1]._attributes.url,
-                arttag: `${ item.category.map((props) => ( props._cdata ))}`
+        <ArtGridStyled>
+          { this.state.portfolio.length < 1 &&
+            <p>loading...</p>
+          }
+          
+          { this.state.portfolio.map((item) => (
+            <Link key={ item.guid._text } to={ 
+              {
+                pathname: item.title._text.replace(/ /g, '-'),
+                state: {
+                  title: item.title._text,
+                  desc: item["description"]._cdata,
+                  imgsrc: item["media:content"][1]._attributes.url,
+                  arttag: `${ item.category.map((props) => ( props._cdata ))}`
+                }
               }
-            }
-          }><ArtPiece arttag={`${ item.category.map((props) => ( props._cdata ))}`} title={ item.title._text } image={ item["media:content"][1]._attributes.url } imagesize={`${ window.innerWidth > 400 ? 360 : 300 }`} /></Link>
-          ) 
-        )}
-      </ArtGridStyled>
+            }><ArtPiece arttag={`${ item.category.map((props) => ( props._cdata ))}`} title={ item.title._text } image={ item["media:content"][1]._attributes.url } imagesize={`${ window.innerWidth > 400 ? 360 : 300 }`} /></Link>
+            ) 
+          )}
+        </ArtGridStyled>
+      </div>
     );
   }
 }

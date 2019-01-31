@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import{
   Route,
+  Link,
   Switch
 } from 'react-router-dom';
 import ArtGrid  from './ArtGrid';
@@ -11,11 +12,25 @@ export default class GridRouter extends Component {
     
     render() {
         return (
+            <div>
+            <p>Filters: 
+                <Link to="/filter/design"><strong>Design</strong></Link>
+                <Link to="/filter/webdesign">Web Design</Link>
+                <Link to="/filter/graphicdesign">Graphic Design</Link>
+                <Link to="/filter/socialmedia">Social Media Design</Link> |  
+                <Link to="/filter/pixelart"><strong>Pixel Art</strong></Link>
+            </p>
             <Switch>
-                <Route exact key="home" path="/" component={ ArtGrid } />
+                <Route exact path="/" component={ ArtGrid } />
                 {/*<Route path="/filter/:title" render={(props) => <ArtGrid {...props} filter="pixelart"/>} />*/}
-                <Route path="/filter/:tag" component={ ArtGrid }/>
+                {/*<Route key=":tag" path="/filter/:tag" render={ ArtGrid }/>*/}
+                <Route 
+                    exact
+                    path="/filter/:tag"
+                    render={props => <ArtGrid key={props.match.params.type || 'empty'}/>} 
+                /> 
             </Switch>
+            </div>
         );
     }
 }
