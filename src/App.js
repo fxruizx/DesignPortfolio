@@ -5,7 +5,6 @@ import{
   Switch
 } from 'react-router-dom';
 import Navigation from './Navigation';
-//import GridRouter from './GridRouter';
 import AboutPage from './AboutPage';
 import ArtGrid  from './ArtGrid';
 import ArtDetail from './ArtDetail';
