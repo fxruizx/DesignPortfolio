@@ -67,7 +67,7 @@ export default class ArtGrid extends Component {
           <li>  <Link to="/filter/webdesign">Web Design</Link>  </li>
           <li>  <Link to="/filter/graphicdesign">Graphic Design</Link>  </li>
           <li>  <Link to="/filter/socialmedia">Social Media Design</Link>  </li> 
-          <li>  <Link to="/filter/pixelart"><strong>Pixel Art</strong></Link>  </li>
+          <li>  <Link to="/filter/pixelart">Pixel Art</Link>  </li>
         </FiltersStyled>
         <ArtGridStyled>
           { this.state.portfolio.length < 1 &&
@@ -85,7 +85,7 @@ export default class ArtGrid extends Component {
                   arttag: `${ item.category.map((props) => ( props._cdata ))}`
                 }
               }
-            }><ArtPiece arttag={`${ item.category.map((props) => ( props._cdata ))}`} title={ item.title._text } image={ item["media:content"][1]._attributes.url } imagesize={`${ window.innerWidth > 400 ? 360 : 300 }`} /></Link>
+            }><ArtPiece arttag={`${ item.category.map((props) => ( props._cdata ))}`} title={ item.title._text } image={ item["media:content"][1]._attributes.url } imagesize={`${ window.innerWidth > 400 ? 400 : 300 }`} /></Link>
             ) 
           )}
         </ArtGridStyled>
@@ -104,18 +104,16 @@ const ArtGridStyled = styled.div`
   grid-row-gap: 1rem;
   margin: 0 auto;
   padding: 2rem 0;
+  max-width: 1280px;
   width: 80%;
   
-  @media screen and (max-width: 400px){
+  @media screen and (max-width: 600px){
     grid-template-columns: repeat(auto-fit, minmax(80%, 1fr));
   }
   
   /* Center Images in Grid cells */
-  a{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+    a { display: flex; justify-content: center; align-items: center; }
+  img { height: auto; max-width: 100%; }
 `;
 
 const FiltersStyled = styled.ul`

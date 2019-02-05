@@ -45,7 +45,8 @@ const ArtDetailStyled = styled.div`
   margin: 0 auto;
   max-width: 800px;
   padding: 2em 0;
-  width: 94%;
+  max-width: 1080px;
+  width: 80%;
   
   img{
     max-width: 100%;

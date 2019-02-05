@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
 
+h1,h2,h3,h4,h5,h6{ margin-bottom: 0.25em; }
+p{ margin-top: 0; }
+
 .App {
   text-align: center;
   font-family: 'Josefin Sans', sans-serif;
@@ -21,7 +24,7 @@
   color: white;
 }
 
-.App-link {
+.App-link, a {
   color: #198;
   text-decoration: none;
 }
