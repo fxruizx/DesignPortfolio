@@ -1,5 +1,5 @@
 # Design Portfolio
-After getting my feet wet with React while working on my [Podcast Nexus project](../PodcastNexus), I decided to remake my web and graphic design portfolio, in React (it needed an update anyway).
+After getting my feet wet with React while working on my [Podcast Nexus project](https://github.com/fxruizx/PodcastNexus), I decided to remake my web and graphic design portfolio, in React (it needed an update anyway).
 Project is still a work in progress, but you can see the latest build of it at http://react.fxrdesign.com
 
 ## Web Technologies/Languages Utilized
