@@ -8,6 +8,7 @@ import Navigation from './Navigation';
 import AboutPage from './AboutPage';
 import ArtGrid  from './ArtGrid';
 import ArtDetail from './ArtDetail';
+import BackToTop from './BackToTop';
 
 import './App.css';
 
@@ -17,7 +18,7 @@ class App extends Component {
     //console.log( this.state.portfolio );
     return (
       <Router>
-        <div className="App">
+        <div className="App" id="AppTop">
           <header className="App-header">
             <Navigation></Navigation>
           </header>
@@ -27,6 +28,7 @@ class App extends Component {
             <Route path="/filter/:tag" component={ ArtGrid }/>
             <Route path="/:title" component={ ArtDetail } />
           </Switch>
+          <BackToTop/>
         </div>
       </Router>
     );
