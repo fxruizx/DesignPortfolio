@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import ArtPiece  from './ArtPiece';
 
@@ -46,7 +46,6 @@ export default class ArtGrid extends Component {
   async componentDidUpdate(prevProps) {
     if (this.props.match.params.tag !== prevProps.match.params.tag) {
       this.setState({ tag: this.props.match.params.tag });
-      console.log("new state:"+this.state.tag);
       try{
         let artwork = await this.fetchPodcast(this.props.match.params.tag);
         this.setState({
@@ -58,7 +57,18 @@ export default class ArtGrid extends Component {
   
   
   render() {
-    console.log("urlfilter:" + this.state.tag);
+    
+    const FilterSelect = withRouter(({ history }) => (
+    <select value='' onChange={(event) => { let val = event.target.value ? `/filter/${ event.target.value }`: event.target.value; history.push(val)}}>
+      <option value="" disabled>Select Filter &#9662;</option>
+      <option value="">All</option>
+      <option value="webdesign">Web Design</option>
+      <option value="graphicdesign">Graphic Design</option>
+      <option value="socialmedia">Social Media Design</option>
+      <option value="pixelart">Pixel Art</option>
+    </select>
+    ));
+    
     return (
       <div>
         <FiltersStyled>
@@ -68,6 +78,9 @@ export default class ArtGrid extends Component {
           <li>  <Link to="/filter/graphicdesign">Graphic Design</Link>  </li>
           <li>  <Link to="/filter/socialmedia">Social Media Design</Link>  </li> 
           <li>  <Link to="/filter/pixelart">Pixel Art</Link>  </li>
+          <li className="mobile-only">
+            <FilterSelect/>
+          </li>
         </FiltersStyled>
         <ArtGridStyled>
           { this.state.portfolio.length < 1 &&
@@ -123,7 +136,20 @@ const FiltersStyled = styled.ul`
   padding: 0;
   width: 80%;
   
-  li{ display: inline-block; margin: 0 .5em;}
+  li{ 
+    display: inline-block; margin: 0 .5em;
+    @media screen and (max-width: 600px){
+      display: none;
+    }
+  }
+  li.mobile-only{
+    display: none;
+    @media screen and (max-width: 600px){
+      border: 1px solid #198; border-radius: 4px; color: #198; display: inline; padding: .25em;
+    }
+  }
   li a{ border: 1px solid #198; border-radius: 4px; color: #198; padding: .25em; text-decoration: none; }
+  
+  
 `;
 
