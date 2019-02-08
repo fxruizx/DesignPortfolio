@@ -14,7 +14,7 @@ export default class ArtGrid extends Component {
   async fetchPodcast(tag){ 
     const convert = require('xml-js'), //CONVERT XML TO JSON
           hostSite = 'https://franciscoxruiz.wordpress.com',
-          proxy = "https://cors-anywhere.herokuapp.com/";
+          proxy = "https://powerful-fjord-17912.herokuapp.com/";
           
     //Check if tag exists as a prop of the location before concluding there is not tag
     if(!tag && this.props.match.params.tag){
