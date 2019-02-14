@@ -4,6 +4,8 @@ import ArtPiece from './ArtPiece';
 
 export default class ArtDetail extends Component {
   
+  /**** BELOW IS ARTDETAILS FOR WORDPRESS
+  
   state = {
     title: '',
     desc: '',
@@ -19,19 +21,55 @@ export default class ArtDetail extends Component {
       arttag: this.props.location.state.arttag
     });
     
+  } */
+  
+  /**** BELOW IS ARTDETAIL FOR BEHANCE ****/
+  state = {
+    artwork: {
+      project: {
+        name: '',
+        id: 0,
+        fields: [],
+        description: '',
+        modules: [{}]
+      }
+    },
+    //artimgs: {},
+    id: this.props.location.state.id,
+    arttag: this.props.location.state.arttag
+  }
+  
+  async componentDidMount(){
+    const HOSTSITE = 'http://www.behance.net/v2/projects',
+          APIKEY = 'CWMNQhHpXBN1VHlUg7HBYScp7iyLQ29H',
+          PROXY = 'https://powerful-fjord-17912.herokuapp.com';
+    try{
+      
+      const result = await fetch(`${ PROXY }/${ HOSTSITE }/${ this.state.id }?api_key=${ APIKEY }`),
+            artwork = await result.json();
+            
+      this.setState({ 
+        artwork: artwork,
+      });
+      //console.log(this.state.artwork.project.name);
+      
+    } catch(e){
+      console.log(e);
+    }
   }
   
   render() {
-    //const { title, imgsrc } = this.state;
-    const { title, desc, imgsrc, arttag } = this.state;
-    console.log("arttags: "+ arttag);
+    const { arttag, artwork, id } = this.state;
+    let artName = artwork.project.name,
+        artDesc = artwork.project.description,
+        artImg = artwork.project.modules[0].src;
     return (
       <ArtDetailStyled>
-        <ArtPiece arttag={ arttag } title={ title } image={ imgsrc } />
+        <ArtPiece key={ id } arttag={ arttag } title={ artName } image={ artImg } />
         <ArtTitleStyled>
-          <h4>{ title }</h4>
+          <h4>{ artName }</h4>
           {/* dangerouslySetInnerHTML used to allow for apostrophe's and other html/numeric entities in the description to be rendered correctly */}
-          <p dangerouslySetInnerHTML={{__html: desc}}></p>
+          <p dangerouslySetInnerHTML={{__html: `Brief: ${artDesc}` }}></p>
         </ArtTitleStyled>
       </ArtDetailStyled>
     );

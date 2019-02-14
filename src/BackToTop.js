@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components';
 
 //FUNCTIONAL STATELESS COMPONENT
 export default class BackToTop extends Component {
-    state ={
+    state = {
         bttToggle: 'down' 
     }
     
@@ -14,7 +14,7 @@ export default class BackToTop extends Component {
     render(){
         
         let scrollPosition = 0;
-        window.addEventListener('scroll', () => {
+        window.onscroll = () => {
             scrollPosition = window.scrollY;
             
             if(scrollPosition > 200 && this.state.bttToggle === 'down'){
@@ -22,7 +22,7 @@ export default class BackToTop extends Component {
             }else if(scrollPosition <= 200){
                 this.setState({ bttToggle: 'down'});
             }
-        });
+        };
         return(
             <BackToTopStyled className={ this.state.bttToggle }>
                 <button onClick={ this.scrollToTop }>Back to Top</button>

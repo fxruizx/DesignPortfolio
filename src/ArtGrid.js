@@ -11,21 +11,51 @@ export default class ArtGrid extends Component {
   }
   
   //GRAB PORTFOLIO FROM HOSTSITE, USING WP.COM AS A LAZY CMS
-  async fetchPodcast(tag){ 
+  async fetchPortfolio(tag){ 
+    /**** BELOW IS FOR WORDPRESS DATA ****
     const convert = require('xml-js'), //CONVERT XML TO JSON
           hostSite = 'https://franciscoxruiz.wordpress.com',
-          proxy = "https://powerful-fjord-17912.herokuapp.com/";
+          proxy = "https://powerful-fjord-17912.herokuapp.com/";*/
+          
+    /**** BELOW IS FOR BEHANCE API ****/      
+    const HOSTSITE = 'http://www.behance.net/v2/collections',
+          APIKEY = 'CWMNQhHpXBN1VHlUg7HBYScp7iyLQ29H',
+          PROXY = 'https://powerful-fjord-17912.herokuapp.com';
           
     //Check if tag exists as a prop of the location before concluding there is not tag
     if(!tag && this.props.match.params.tag){
       tag = this.props.match.params.tag;
     }
+    
+    //Associate an existing tag with it's BEHANCE collection id
+    let collectionId = 0;
+    switch(tag){
+      case 'graphicdesign': 
+        collectionId = 170844855;
+        break;
+      case 'webdesign':
+        collectionId = 170846591;
+        break;
+      case 'pixelart':
+        collectionId = 170846349;
+        break;
+      default:
+        // Defaults to the All collection
+        collectionId = 170846615;
+        break;
+    }
+    console.log("collectionId: "+collectionId);
+    
     try{
       //If tag exists use it to grab feed of that tag, otherwise get all results
+      /**** PULLING DATA FROM WORDPRESS RSS ****
       let result = tag ? await fetch(proxy+hostSite+'/tag/'+tag+'/feed/?format=xml') : await fetch(proxy+hostSite+'/feed/?format=xml'),
           artworkTxt = await result.text(),
           artworkJSON = await convert.xml2json(artworkTxt, {compact: true, spaces: 2}),
-          artwork = JSON.parse(artworkJSON);
+          artwork = JSON.parse(artworkJSON);*/
+      /**** PULLING DATA FROM BEHANCE API ****/
+      let result = await fetch(PROXY+'/'+HOSTSITE+'/'+collectionId+'/projects?api_key='+APIKEY),
+          artwork = result.json();
       return artwork;
     } catch(e){
       console.log(e);
@@ -34,9 +64,12 @@ export default class ArtGrid extends Component {
   
   async componentDidMount(){
     try{
-      let artwork = await this.fetchPodcast(this.state.tag);
+      let artwork = await this.fetchPortfolio(this.state.tag);
       this.setState({
-        portfolio: artwork.rss.channel.item
+        /**** BELOW IS SETTING PORTFOLIO TO DATA FROM WORDPRESS
+        portfolio: artwork.rss.channel.item ****/
+        /**** BELOW IS SETTING PORTFOLIO TO DATA FROM BEHANCE ****/
+        portfolio: artwork.projects
       });
     } catch(e){
       console.log(e);
@@ -47,9 +80,12 @@ export default class ArtGrid extends Component {
     if (this.props.match.params.tag !== prevProps.match.params.tag) {
       this.setState({ tag: this.props.match.params.tag });
       try{
-        let artwork = await this.fetchPodcast(this.props.match.params.tag);
+        let artwork = await this.fetchPortfolio(this.props.match.params.tag);
         this.setState({
-          portfolio: artwork.rss.channel.item
+          /**** BELOW IS SETTING PORTFOLIO TO DATA FROM WORDPRESS
+          portfolio: artwork.rss.channel.item ****/
+          /**** BELOW IS SETTING PORTFOLIO TO DATA FROM BEHANCE ****/
+          portfolio: artwork.projects
         });
       } catch(e){console.log(e)}
     }
@@ -87,6 +123,7 @@ export default class ArtGrid extends Component {
             <p>loading...</p>
           }
           
+          {/**** BELOW IS MAPPING FROM WORDPRESS 
           { this.state.portfolio.map((item) => (
             <Link key={ item.guid._text } to={ 
               {
@@ -100,6 +137,22 @@ export default class ArtGrid extends Component {
               }
             }><ArtPiece arttag={`${ item.category.map((props) => ( props._cdata ))}`} title={ item.title._text } image={ item["media:content"][1]._attributes.url } imagesize={`${ window.innerWidth > 400 ? 400 : 300 }`} /></Link>
             ) 
+          )}*/}
+          {/**** BELOW IS MAPPING FROM BEHANCE ****/}
+          { this.state.portfolio.map((item) => (
+              <Link key={ item.id } to={
+                {
+                  pathname: '../'+item.slug,
+                  state: { 
+                    title: item.slug,
+                    id: item.id,
+                    arttag: `${ item.fields.map((props) => (props))}`
+                  }
+                }
+              }>
+                <ArtPiece arttag={`${ item.fields.map((props) => (props))}`} title={ item.name } image={`${ window.innerWidth > 400 ? item.covers['404'] : item.covers['230'] }`} />
+              </Link>
+            )
           )}
         </ArtGridStyled>
       </div>

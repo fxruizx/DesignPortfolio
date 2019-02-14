@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 //FUNCTIONAL STATELESS COMPONENT
 // title and image are the props from ArtGrid.js
-const ArtPiece = ({ title, image, imagesize, key, arttag }) => (
-    <ArtPieceStyled key={ key } arttag={ arttag } src={`${ image }?w=${ imagesize }`} alt={ title } title={ title } />
+const ArtPiece = ({ title, image, key, arttag }) => (
+    <ArtPieceStyled key={ key } arttag={ arttag } src={`${ image }`} alt={ title } title={ title } />
 );
 
 export default ArtPiece;
