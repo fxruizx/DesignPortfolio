@@ -100,7 +100,7 @@ export default class ArtGrid extends Component {
     
     const FilterSelect = withRouter(({ history }) => (
     <select value='' onChange={(event) => { let val = event.target.value ? `/filter/${ event.target.value }`: event.target.value; history.push(val)}}>
-      <option value="" disabled>Select Filter &#9662;</option>
+      <option value="" disabled>Select Filter</option>
       <option value="">All</option>
       <option value="webdesign">Web Design</option>
       <option value="graphicdesign">Graphic Design</option>
@@ -123,6 +123,7 @@ export default class ArtGrid extends Component {
           </li>
         </FiltersStyled>
         <ArtGridStyled>
+          
           { this.state.portfolio.length < 1 &&
             <PacLoader r={ 17 } g={ 153 } b={ 134 } />
           }
@@ -195,14 +196,14 @@ const FiltersStyled = styled.ul`
   
   li{ 
     display: inline-block; margin: 0 .5em;
-    @media screen and (max-width: 600px){
+    @media screen and (max-width: 640px){
       display: none;
     }
   }
   li.mobile-only{
     display: none;
-    @media screen and (max-width: 600px){
-      border: 1px solid #198; border-radius: 4px; color: #198; display: inline; padding: .25em;
+    @media screen and (max-width: 640px){
+      border: none; border-radius: 4px; color: #198; display: inline;
     }
   }
   li a{ border: 1px solid #198; border-radius: 4px; color: #198; padding: .25em; text-decoration: none; }

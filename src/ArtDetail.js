@@ -68,13 +68,18 @@ export default class ArtDetail extends Component {
     }
   }
   
-  //Hide loader when ArtPiece loaded
+  //Hide loader when ArtPiece loaded and unpause slidein animations
   onLoaded = () => {
     this.setState({ loaded: true });
     this.image.classList.remove('img-loading');
     this.artTitleDesc.classList.remove('img-loading');
     
   };
+  
+  //Go Back to previous view
+  //backOne = () => {
+    //history.goBack();
+  //};
   
   render() {
     const { arttag, artwork, id } = this.state;
@@ -97,6 +102,7 @@ export default class ArtDetail extends Component {
           <h4>{ artName }</h4>
           {/* dangerouslySetInnerHTML used to allow for apostrophe's and other html/numeric entities in the description to be rendered correctly */}
           <p dangerouslySetInnerHTML={{__html: `Brief: ${artDesc}` }}></p>
+          <p><button onClick={this.props.history.goBack}>Back</button></p>
         </ArtTitleStyled>
       </ArtDetailStyled>
     );
@@ -144,6 +150,8 @@ const ArtTitleStyled = styled.div`
   text-align: left;
   transform: translateX(100px);
   animation: .5s forwards titleAppear;
+  
+  button{ background-color: #198; border: 1px solid #198; border-radius: 4px; color: #fff; padding: .25em; text-decoration: none; }
   
   @media screen and (max-width: 640px){
     grid-column: 1 / span 10;
