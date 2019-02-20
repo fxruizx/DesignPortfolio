@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import ArtPiece from './ArtPiece';
+import PacLoader from './PacLoader';
+//import ArtPiece from './ArtPiece';
+
 
 export default class ArtDetail extends Component {
   
@@ -27,16 +29,24 @@ export default class ArtDetail extends Component {
   state = {
     artwork: {
       project: {
+        colors: [{
+          r: '',
+          g: '',
+          b: ''
+        }],
         name: '',
         id: 0,
         fields: [],
         description: '',
-        modules: [{}]
+        modules: [{
+          sizes: ''
+        }]
       }
     },
     //artimgs: {},
     id: this.props.location.state.id,
-    arttag: this.props.location.state.arttag
+    arttag: this.props.location.state.arttag,
+    loaded: false
   }
   
   async componentDidMount(){
@@ -44,7 +54,7 @@ export default class ArtDetail extends Component {
           APIKEY = 'CWMNQhHpXBN1VHlUg7HBYScp7iyLQ29H',
           PROXY = 'https://powerful-fjord-17912.herokuapp.com';
     try{
-      
+      document.getElementById("AppTop").scrollIntoView();
       const result = await fetch(`${ PROXY }/${ HOSTSITE }/${ this.state.id }?api_key=${ APIKEY }`),
             artwork = await result.json();
             
@@ -58,15 +68,32 @@ export default class ArtDetail extends Component {
     }
   }
   
+  //Hide loader when ArtPiece loaded
+  onLoaded = () => {
+    this.setState({ loaded: true });
+    this.image.classList.remove('img-loading');
+    this.artTitleDesc.classList.remove('img-loading');
+    
+  };
+  
   render() {
     const { arttag, artwork, id } = this.state;
     let artName = artwork.project.name,
         artDesc = artwork.project.description,
-        artImg = artwork.project.modules[0].src;
+        artColor = artwork.project.colors[0],
+        artImg = artwork.project.modules[0].sizes.max_1240;
+        
+    
+        
     return (
       <ArtDetailStyled>
-        <ArtPiece key={ id } arttag={ arttag } title={ artName } image={ artImg } />
-        <ArtTitleStyled>
+        { !this.state.loaded && 
+          <PacLoader r={ artColor.r } g={ artColor.g } b={ artColor.b } /> 
+        }
+        <img ref={(img) => this.image = img } id={ id } src={ artImg } title={ artName } alt={ artName } className={`img-loading ${ arttag }`} onLoad={ this.onLoaded } />
+        {/*<ArtPiece id={ id } arttag={ arttag } title={ artName } image={ artImg } onLoad={ this.onLoaded } />*/}
+        
+        <ArtTitleStyled className='img-loading' ref={(ArtTitleStyled) => this.artTitleDesc = ArtTitleStyled}>
           <h4>{ artName }</h4>
           {/* dangerouslySetInnerHTML used to allow for apostrophe's and other html/numeric entities in the description to be rendered correctly */}
           <p dangerouslySetInnerHTML={{__html: `Brief: ${artDesc}` }}></p>
@@ -100,6 +127,8 @@ const ArtDetailStyled = styled.div`
     }
   }
   
+  .img-loading{ animation-play-state: paused !important; }
+  
   @keyframes imgAppear{
     from{ transform: translateX(-100px); opacity: 0; }
     to{ transform: translateX( 0px); opacity: 1; }
@@ -108,7 +137,7 @@ const ArtDetailStyled = styled.div`
 
 const ArtTitleStyled = styled.div`
   grid-column: 9 / 11;
-  grid-row: 5 / 8;
+  grid-row: 1 / 4;
   background-color: rgba(255,255,255,.75);
   box-shadow: 1px 2px 2px rgba(0,0,0,.2);
   padding: .5em;

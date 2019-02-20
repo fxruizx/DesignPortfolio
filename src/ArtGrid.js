@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import ArtPiece  from './ArtPiece';
+import PacLoader from './PacLoader';
 
 export default class ArtGrid extends Component {
   
@@ -38,6 +39,9 @@ export default class ArtGrid extends Component {
         break;
       case 'pixelart':
         collectionId = 170846349;
+        break;
+      case 'socialmedia':
+        collectionId = 170867761;
         break;
       default:
         // Defaults to the All collection
@@ -120,7 +124,7 @@ export default class ArtGrid extends Component {
         </FiltersStyled>
         <ArtGridStyled>
           { this.state.portfolio.length < 1 &&
-            <p>loading...</p>
+            <PacLoader r={ 17 } g={ 153 } b={ 134 } />
           }
           
           {/**** BELOW IS MAPPING FROM WORDPRESS 
@@ -202,7 +206,5 @@ const FiltersStyled = styled.ul`
     }
   }
   li a{ border: 1px solid #198; border-radius: 4px; color: #198; padding: .25em; text-decoration: none; }
-  
-  
 `;
 
