@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import ArtPiece from './ArtPiece';
+import PacLoader from './PacLoader';
+//import ArtPiece from './ArtPiece';
+
 
 export default class ArtDetail extends Component {
+  
+  /**** BELOW IS ARTDETAILS FOR WORDPRESS
   
   state = {
     title: '',
@@ -19,19 +23,80 @@ export default class ArtDetail extends Component {
       arttag: this.props.location.state.arttag
     });
     
+  } */
+  
+  /**** BELOW IS ARTDETAIL FOR BEHANCE ****/
+  state = {
+    artwork: {
+      project: {
+        colors: [{
+          r: '',
+          g: '',
+          b: ''
+        }],
+        name: '',
+        id: 0,
+        fields: [],
+        description: '',
+        modules: [{
+          sizes: ''
+        }]
+      }
+    },
+    //artimgs: {},
+    id: this.props.location.state.id,
+    arttag: this.props.location.state.arttag,
+    loaded: false
   }
   
+  async componentDidMount(){
+    const HOSTSITE = 'http://www.behance.net/v2/projects',
+          APIKEY = 'CWMNQhHpXBN1VHlUg7HBYScp7iyLQ29H',
+          PROXY = 'https://powerful-fjord-17912.herokuapp.com';
+    try{
+      document.getElementById("AppTop").scrollIntoView();
+      const result = await fetch(`${ PROXY }/${ HOSTSITE }/${ this.state.id }?api_key=${ APIKEY }`),
+            artwork = await result.json();
+            
+      this.setState({ 
+        artwork: artwork,
+      });
+      //console.log(this.state.artwork.project.name);
+      
+    } catch(e){
+      console.log(e);
+    }
+  }
+  
+  //Hide loader when ArtPiece loaded
+  onLoaded = () => {
+    this.setState({ loaded: true });
+    this.image.classList.remove('img-loading');
+    this.artTitleDesc.classList.remove('img-loading');
+    
+  };
+  
   render() {
-    //const { title, imgsrc } = this.state;
-    const { title, desc, imgsrc, arttag } = this.state;
-    console.log("arttags: "+ arttag);
+    const { arttag, artwork, id } = this.state;
+    let artName = artwork.project.name,
+        artDesc = artwork.project.description,
+        artColor = artwork.project.colors[0],
+        artImg = artwork.project.modules[0].sizes.max_1240;
+        
+    
+        
     return (
       <ArtDetailStyled>
-        <ArtPiece arttag={ arttag } title={ title } image={ imgsrc } />
-        <ArtTitleStyled>
-          <h4>{ title }</h4>
+        { !this.state.loaded && 
+          <PacLoader r={ artColor.r } g={ artColor.g } b={ artColor.b } /> 
+        }
+        <img ref={(img) => this.image = img } id={ id } src={ artImg } title={ artName } alt={ artName } className={`img-loading ${ arttag }`} onLoad={ this.onLoaded } />
+        {/*<ArtPiece id={ id } arttag={ arttag } title={ artName } image={ artImg } onLoad={ this.onLoaded } />*/}
+        
+        <ArtTitleStyled className='img-loading' ref={(ArtTitleStyled) => this.artTitleDesc = ArtTitleStyled}>
+          <h4>{ artName }</h4>
           {/* dangerouslySetInnerHTML used to allow for apostrophe's and other html/numeric entities in the description to be rendered correctly */}
-          <p dangerouslySetInnerHTML={{__html: desc}}></p>
+          <p dangerouslySetInnerHTML={{__html: `Brief: ${artDesc}` }}></p>
         </ArtTitleStyled>
       </ArtDetailStyled>
     );
@@ -62,6 +127,8 @@ const ArtDetailStyled = styled.div`
     }
   }
   
+  .img-loading{ animation-play-state: paused !important; }
+  
   @keyframes imgAppear{
     from{ transform: translateX(-100px); opacity: 0; }
     to{ transform: translateX( 0px); opacity: 1; }
@@ -70,7 +137,7 @@ const ArtDetailStyled = styled.div`
 
 const ArtTitleStyled = styled.div`
   grid-column: 9 / 11;
-  grid-row: 5 / 8;
+  grid-row: 1 / 4;
   background-color: rgba(255,255,255,.75);
   box-shadow: 1px 2px 2px rgba(0,0,0,.2);
   padding: .5em;
