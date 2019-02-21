@@ -15,7 +15,6 @@ import './App.css';
 class App extends Component {
   
   render() {
-    //console.log( this.state.portfolio );
     return (
       <Router>
         <div className="App" id="AppTop">

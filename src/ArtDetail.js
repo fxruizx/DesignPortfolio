@@ -45,7 +45,7 @@ export default class ArtDetail extends Component {
     },
     //artimgs: {},
     id: this.props.location.state.id,
-    arttag: this.props.location.state.arttag,
+    //arttag: this.props.location.state.arttag,
     loaded: false
   }
   
@@ -76,17 +76,13 @@ export default class ArtDetail extends Component {
     
   };
   
-  //Go Back to previous view
-  //backOne = () => {
-    //history.goBack();
-  //};
-  
   render() {
-    const { arttag, artwork, id } = this.state;
+    const { artwork, id } = this.state;
     let artName = artwork.project.name,
         artDesc = artwork.project.description,
         artColor = artwork.project.colors[0],
-        artImg = artwork.project.modules[0].sizes.max_1240;
+        artImg = artwork.project.modules[0].sizes.max_1240,
+        artTags = artwork.project.fields.toString().toLowerCase().replace(' ','-').replace(',',' ');
         
     
         
@@ -95,8 +91,8 @@ export default class ArtDetail extends Component {
         { !this.state.loaded && 
           <PacLoader r={ artColor.r } g={ artColor.g } b={ artColor.b } /> 
         }
-        <img ref={(img) => this.image = img } id={ id } src={ artImg } title={ artName } alt={ artName } className={`img-loading ${ arttag }`} onLoad={ this.onLoaded } />
-        {/*<ArtPiece id={ id } arttag={ arttag } title={ artName } image={ artImg } onLoad={ this.onLoaded } />*/}
+        {/* ref= is to allow for accessing the animation start/stop from js, i.e. onLoaded() */} 
+        <img ref={(img) => this.image = img } id={ id } src={ artImg } title={ artName } alt={ artName } className={ `img-loading ${ artTags }` } onLoad={ this.onLoaded } />
         
         <ArtTitleStyled className='img-loading' ref={(ArtTitleStyled) => this.artTitleDesc = ArtTitleStyled}>
           <h4>{ artName }</h4>
@@ -120,12 +116,16 @@ const ArtDetailStyled = styled.div`
   width: 80%;
   
   img{
+    box-shadow: 1px 2px 2px rgba(0,0,0,.2);
+    margin: 0 auto;
     max-width: 100%;
     height: auto;
     grid-column: 1 / 9;
     grid-row: 1 / span 7;
     transform: translateX(-100px);
     animation: .5s forwards imgAppear;
+    
+    &.branding{ box-shadow: 0 0 0 !important; }
     
     @media screen and (max-width: 640px){
       grid-column: 1 / span 10;
