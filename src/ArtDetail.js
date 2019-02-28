@@ -92,7 +92,7 @@ export default class ArtDetail extends Component {
           <PacLoader r={ artColor.r } g={ artColor.g } b={ artColor.b } /> 
         }
         {/* ref= is to allow for accessing the animation start/stop from js, i.e. onLoaded() */} 
-        <img ref={(img) => this.image = img } id={ id } src={ artImg } title={ artName } alt={ artName } className={ `img-loading ${ artTags }` } onLoad={ this.onLoaded } />
+        <a href={ artImg }><img ref={(img) => this.image = img } id={ id } src={ artImg } title={ artName } alt={ artName } className={ `img-loading ${ artTags }` } onLoad={ this.onLoaded } /></a>
         
         <ArtTitleStyled className='img-loading' ref={(ArtTitleStyled) => this.artTitleDesc = ArtTitleStyled}>
           <h4>{ artName }</h4>
