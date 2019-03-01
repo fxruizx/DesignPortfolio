@@ -117,7 +117,8 @@ export default class ArtGrid extends Component {
           { this.state.portfolio.map((item) => (
               <Link key={ item.id } to={
                 {
-                  pathname: '../'+item.slug,
+                  //pathname: '../'+item.slug, <= this was for a pretty art detail url
+                  pathname: '../'+item.id,
                   state: { 
                     title: item.slug,
                     id: item.id,
